@@ -38,7 +38,7 @@ rapidly building custom designs.
 
 * **Tulio Faria** - [LinkedIn](https://www.linkedin.com/in/tuliofaria/)
 
-### Reproduzido por:
+## Reproduzido por:
 
 * **Paulo Henrique B. Santos** - [LinkedIn](https://www.linkedin.com/in/paulo-henrique-barbosa/)
 
