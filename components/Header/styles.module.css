@@ -1,0 +1,3 @@
+.wrapper{
+  @apply bg-pink-400 p-4 shadow-md;
+}
