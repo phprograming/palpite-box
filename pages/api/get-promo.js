@@ -15,12 +15,12 @@ export default async (req, res) => {
     const sheet = doc.sheetsByIndex[2];
     await sheet.loadCells('A2:B2');
 
-    const showCellPromotion = sheet.getCell(1, 0);
-    const showTextPromotion = sheet.getCell(1, 1);
+    const ativarPromocao = sheet.getCell(1, 0);
+    const mensagemPromocao = sheet.getCell(1, 1);
 
     res.end(JSON.stringify({
-      showCoupon: showCellPromotion.value === 'VERDADEIRO',
-      message: showTextPromotion.value
+      showCoupon: ativarPromocao.value === 'VERDADEIRO',
+      message: mensagemPromocao.value
     }))
 
   } catch (err) {

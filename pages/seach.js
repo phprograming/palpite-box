@@ -1,127 +1,144 @@
 import React, { useState } from 'react';
+
+import styles from '../css/seach.module.css';
 import PageTitle from '../components/pageTitle';
 
 const Seach = () => {
+  const notas = [1, 2, 3, 4, 5];
 
   const [form, setForm] = useState({
     Nome: '',
     Email: '',
     Whatsapp: '',
-    Nota: 0
+    Nota: '',
+    Mensagem: ''
   });
 
-  const notas = [0, 1, 2, 3, 4, 5];
-
-  const [sucess, setSucess] = useState(false);
-
-  const [returnSucess, setReturnSucess] = useState({});
+  const [success, setSuccess] = useState(false);
+  const [successReturn, setSuccessReturn] = useState({});
 
   const save = async () => {
     try {
       const response = await fetch('/api/save', {
         method: 'POST',
         body: JSON.stringify(form)
-      })
+      });
 
       const data = await response.json();
-      setSucess(true);
-      setReturnSucess(data);
-    } catch (err) {
 
+      setSuccess(true);
+      setSuccessReturn(data);
+    } catch (error) {
+      console.log(error);
     }
-  }
+  };
 
-  const onChange = evt => {
-    const value = evt.target.value;
-    const key = evt.target.name;
+  const changeForm = event => {
+    const key = event.target.name;
+    const value = event.target.value;
+
     setForm(old => ({
       ...old,
       [key]: value
-    }))
-  }
+    }));
+  };
 
   return (
-    <div className='pt-6'>
-      <PageTitle title='Pesquisa' />
-      <h1 className='text-center font-bold my-6 text-3xl'>Críticas e sugestões</h1>
-      <p className='text-center mb-6'>
-        O restaurante X sempre busca por atender melhor seus clientes.<br />
-        Por isso, estamos sempre abertos a ouvir a sua opinião.
-      </p>
-      {!sucess &&
-        <div className='w-1/5 mx-auto'>
+    <div className={styles.seachContainer}>
+      <PageTitle title="Pesquisa" />
 
-          <label className='font-bold'>Seu nome:</label>
-          <input type='text'
-            className='p-4 block shadow border my-2 border-pink-600 rounded-lg bg-pink-100'
-            placeholder='Nome'
-            name='Nome'
-            onChange={onChange}
-            value={form.Nome}
-          />
+      {!success &&
+        <div>
+          <h1 className={styles.title}>Opinião ou Sugestão</h1>
+          <p>Texto1</p>
+          <p>Texto2</p>
+          <div className={styles.inputGroup}>
+            <div className={styles.input}>
+              <label htmlFor="name">Nome:</label>
+              <input
+                id="name"
+                type="text"
+                name="Nome"
+                value={form.Nome}
+                onChange={changeForm}
+              />
+            </div>
+            <div className={styles.input}>
+              <label htmlFor="email">e-mail:</label>
+              <input
+                id="email"
+                type="email"
+                name="Email"
+                value={form.Email}
+                onChange={changeForm}
+              />
+            </div>
+            <div className={styles.input}>
+              <label htmlFor="Whatsapp">Whatsapp:</label>
+              <input
+                id="Whatsapp"
+                type="tel"
+                pattern="[0-9]{2} [0-9]{5}-[0-9]{4}"
+                name="Whatsapp"
+                value={form.Whatsapp}
+                onChange={changeForm}
+              />
+            </div>
+            <div className={styles.input}>
+              <label htmlFor="opiniaoSugestao">Opinião / Sugestão:</label>
+              <textarea
+                name="opiniaoSugestao"
+                id="opiniaoSugestao"
+                cols="40"
+                rows="10"
+                maxLength="500"
+                name="Mensagem"
+                value={form.Mensagem}
+                onChange={changeForm}>
+              </textarea>
+            </div>
+            <div className={styles.radioContainer}>
+              <label htmlFor="nota">Nota:</label>
 
-          <label className='font-bold'>E-mail:</label>
-          <input type='text'
-            className='p-4 block shadow border my-2 border-pink-600 rounded-lg bg-pink-100'
-            placeholder='Email'
-            name='Email'
-            onChange={onChange}
-            value={form.Email}
-          />
+              {notas.map((nota, index) => {
+                return (
+                  <div className={styles.radioGroup} key={index}>
+                    <input
+                      className={styles.radio}
+                      type="radio"
+                      name="Nota"
+                      value={nota}
+                      onChange={changeForm}
+                    />
+                    <span>{nota}</span>
+                  </div>
+                );
+              })}
 
-          <label className='font-bold'>Whatsapp:</label>
-          <input type='text'
-            className='p-4 block shadow border my-2 border-pink-600 rounded-lg bg-pink-100'
-            placeholder='Whatsapp'
-            name='Whatsapp'
-            onChange={onChange}
-            value={form.Whatsapp}
-          />
-
-          <label className='font-bold'>Nota:</label>
-          <div className='flex py-6'>
-            {notas.map(nota => {
-              return (
-                <label className='block w-1/6 text-center'>
-                  {nota}<br />
-                  <input type='radio'
-                    name='Nota'
-                    value={nota}
-                    onChange={onChange}
-                  />
-                </label>
-              )
-            })
-            }
+            </div>
+            <div className={styles.input}>
+              <button
+                className={styles.button}
+                onClick={save}>
+                Enviar Opinião / Sugestão
+            </button>
+            </div>
           </div>
+        </div>
+      }
 
-          <button className='bg-pink-400 px-6 py-4 font-bold rounded-lg shadow-lg hover:shadow'
-            onClick={save}>Salvar
-        </button>
+      {success &&
+        <div className={styles.coupon}>
+          <h1>Obrigado pela sua opinião / sugestão!</h1>
+          <h2>Cupom:</h2>
+          <div>{successReturn.Cupom}</div>
+          <h2>Promoção:</h2>
+          <p>{successReturn.Promo}</p>
         </div>
       }
-      {sucess &&
-        <div className='w-3/5 mx-auto'>
-          <p className="mb-6 text-center bg-pink-100 border-t border-b border-pink-500 text-pink-700 px-4 py-3" role="alert">Obrigado por contribuir com sua sugestão ou crítica.</p>
-          {
-            returnSucess.showCoupom &&
-            <div className='text-center border p-4 mb-4'>
-              Seu cupom: <br />
-              <span className='font-bold text-2xl'>{returnSucess.Cupom}</span>
-            </div>
-          }
-          {
-            returnSucess.showCoupom &&
-            <div className='text-center border p-4 mb-4'>
-              <span className='font-bold block mb-2'>{returnSucess.Promo}</span>
-              <br />
-              <span className='italic'>Tire um print ou foto desta tela e apresente em nossa loja.</span>
-            </div>
-          }
-        </div>
-      }
+
     </div>
-  )
-}
+  );
+};
 
 export default Seach;

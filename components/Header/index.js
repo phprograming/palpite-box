@@ -1,33 +1,48 @@
 import React from 'react';
-import styles from './styles.module.css';
+import styles from './Header.module.css';
 import Link from 'next/link';
-import Layout from '../Layout';
 
 const Header = () => {
   return (
-    <React.Fragment>
-      <div className={styles.wrapper}>
-        <div className='container mx-auto'>
-          <Link href='/'>
-            <a><img className='h-48 mx-auto rounded-md shadow-xl' src='/logo_palpitebox.png' alt='PalpiteBox' /></a>
-          </Link>
-        </div>
-      </div>
-      <div className='bg-pink-500 p-4 shadow-md text-center'>
-        <Link href='/'>
-          <a className='px-2 hover:underline'>Início</a>
-        </Link>
-        <Link href='/about'>
-          <a className='px-2 hover:underline'>Sobre</a>
-        </Link>
-        <Link href='/contact'>
-          <a className='px-2 hover:underline'>Contato</a>
-        </Link>
-        <Link href='/seach'>
-          <a className='px-2 hover:underline'>Pesquisa</a>
-        </Link>
-      </div>
-    </React.Fragment>
+    <header className={styles.header}>
+      <nav className="p-4 shadow-md">
+        <ul className={styles.ul}>
+          <li>
+            <Link href='/'>
+              <a className="m-4">
+                <figure className={styles.figure}>
+                  <img
+                    className={styles.img}
+                    src="/logo_palpitebox.png"
+                    alt="PalpiteBox"
+                  />
+                </figure>
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/'>
+              <a className="m-4">Início</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/about'>
+              <a className="m-4">Sobre</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/contact'>
+              <a className="m-4">Contato</a>
+            </Link>
+          </li>
+          <li>
+            <Link href='/seach'>
+              <a className="m-4">Pesquisa</a>
+            </Link>
+          </li>
+        </ul>
+      </nav>
+    </header>
   )
 }
 

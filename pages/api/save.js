@@ -1,13 +1,18 @@
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { fromBase64 } from '../../utils/base64'
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 const doc = new GoogleSpreadsheet(process.env.SHEET_DOC_ID);
 
 const genCupom = () => {
-  const code = parseInt(moment().format('YYMMDDHHmmssSSS')).toString(16).toUpperCase();
+  const code = parseInt(moment().format('YYMMDDHHmmssSSS'))
+    .toString(16)
+    .toUpperCase()
+    .replace(/(\w{4})(\w)/, '$1-$2')
+    .replace(/(\w{4})(\w)/, '$1-$2');
 
-  return code.substr(0, 4) + '-' + code.substr(4, 4) + '-' + code.substr(8, 4);
+  //code = code.substr(0, 4) + '-' + code.substr(4, 4) + '-' + code.substr(8, 4);
+  return code;
 }
 
 export default async (req, res) => {
@@ -44,7 +49,8 @@ export default async (req, res) => {
       Nota: parseInt(data.Nota),
       Cupom,
       Promo,
-      'Data preenchimento': moment().format('DD/MM/YYYY HH:mm:ss')
+      Mensagem: data.Mensagem,
+      Data: moment().tz('America/Bahia').format('DD/MM/YYYY HH:mm:ss')
     })
 
     res.end(JSON.stringify({

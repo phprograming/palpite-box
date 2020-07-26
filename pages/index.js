@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'next/link';
 import useSWR from 'swr';
 import PageTitle from '../components/pageTitle';
+import styles from '../css/index.module.css';
 
 const fetcher = (...args) => fetch(...args).then(res => res.json());
 
@@ -10,24 +11,29 @@ const Index = () => {
   const { data, error } = useSWR('/api/get-promo', fetcher);
 
   return (
-    <div>
+    <>
       <PageTitle title='Seja bem-vindo' />
-      <p className='mt-12 text-center'>
-        O restaurante X sempre busca por atender melhor seus clientes. <br />
-        Por isso, estamos sempre abertos a ouvir a sua opinião.
-      </p>
-      <div className='text-center my-12'>
-        <Link href='/seach'>
-          <a className='bg-blue-400 px-6 py-4 font-bold rounded-lg shadow-lg hover:shadow'>Dar opnião ou sugestão</a>
-        </Link>
+      <div className={styles.message}>
+        <p>O restaurante X sempre busca por atender melhor seus clientes.</p>
+        <p>Por isso, estamos sempre abertos a ouvir a sua opinião.</p>
       </div>
+
+      <Link href='/seach'>
+        <a>
+          <div className={styles.buttonContainer}>
+            Dar opnião ou sugestão
+            </div>
+        </a>
+      </Link>
+
       {!data && <p>Carregando...</p>}
+
       {!error && data && data.showCoupon &&
-        <p className='my-12 text-center'>
-          {data.message}
-        </p>
+        <div className={styles.message}>
+          <p>{data.message}</p>
+        </div>
       }
-    </div>
+    </>
   )
 }
 
