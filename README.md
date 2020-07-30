@@ -1,7 +1,7 @@
 # PalpiteBox - Semana Fullstack Master :rocket:
 [![HitCount](https://hits.dwyl.com/phprograming/palpite-box.svg)](https://hits.dwyl.com/phprograming/palpite-box)
 
-Este projeto foi construído durante a Semana Fullstack Master do [DevPleno](https://devpleno.com). Uma versão online deste projeto pode ser encontrada em: https://palpite-box.phprograming.vercel.app/.
+Este projeto foi construído durante a Semana Fullstack Master do [DevPleno](https://devpleno.com). Uma versão online deste projeto pode ser encontrada em: https://palpite-box.phbarbosa.dev/.
 
 ### Pré-requisitos:
 
